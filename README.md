@@ -4,7 +4,7 @@ A watermark-free, browser-native video post-effect system built with three.js. R
 
 ## How to start
 
-This project uses ES modules (`<script type="module">`), which require an HTTP server — you cannot open `app.html` directly via `file://`.
+This project uses ES modules (`<script type="module">`), which require an HTTP server — you cannot open `index.html` directly via `file://`.
 
 **Option A — Python (from the project root):**
 
@@ -12,9 +12,9 @@ This project uses ES modules (`<script type="module">`), which require an HTTP s
 python -m http.server 8765
 ```
 
-Then open: `http://localhost:8765/app.html`
+Then open: `http://localhost:8765/`
 
-**Option B — any static server** also works (`npx serve`, `php -S localhost:8765`, VS Code Live Server, etc.). Just serve this folder over HTTP and open `app.html`.
+**Option B — any static server** also works (`npx serve`, `php -S localhost:8765`, VS Code Live Server, etc.). Just serve this folder over HTTP and open the root URL.
 
 **Option C — Claude Code MCP preview:** If you use the Claude Code CLI, wire up a `butterfly-effect` entry in `.claude/launch.json` pointing at a local static server, then run `preview_start("butterfly-effect")`.
 
@@ -97,15 +97,17 @@ The default demo video is a Firebase-hosted clip from the original Unicorn Studi
 ## File layout
 
 ```
-app.html               Entry point (import map + canvas + upload UI)
+index.html             Entry point (import map + canvas + upload UI)
+reference.html         Original Unicorn Studio embed — kept side-by-side for visual comparison
 src/
-  main.js              Renderer, EffectComposer, GUI, animation loop
+  main.js              Renderer, EffectComposer, GUI, animation loop, mouse interactivity
   ui/
     uploader.js        Drag/drop + file picker + URL input → HTMLVideoElement
   passes/
-    videoPass.js       Video layer: exposure, saturation, contrast, scale, rotate
+    videoPass.js       Video layer: exposure / saturation / contrast / scale / rotate / mouse warp
     blocksPass.js      Procedural grid layer with blend modes
     glyphDitherPass.js Atlas-baked character dither shader
     blobTrackingPass.js CPU blob detection + GPU dot/connector renderer
-index.html             Original Unicorn Studio embed (kept for visual comparison)
 ```
+
+Visit `/reference.html` to load the original Unicorn Studio embed for side-by-side comparison (note: the embed shows the free-tier watermark — that's the whole reason this project exists).

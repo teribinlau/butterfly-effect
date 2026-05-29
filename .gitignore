@@ -4,3 +4,11 @@ Thumbs.db
 node_modules/
 .vscode/
 .idea/
+
+# Third-party reference material (Unicorn Studio) — kept locally, never published
+reference-project.json
+assets/
+_*.py
+_*.txt
+_ref/
+_rl/

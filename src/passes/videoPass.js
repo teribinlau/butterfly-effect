@@ -17,7 +17,7 @@ export const VideoShader = {
     uOpacity:      { value: 1 },
     uDisplace:     { value: 0 },        // 0..1, simple radial wobble
     uTime:         { value: 0 },
-    uExposureStops:{ value: 0 },        // EV; +2 = 4x brighter
+    uExposure:     { value: 2.0 },      // linear multiplier (Unicorn "Exposure")
     uSat:          { value: 1.72 },
     uContrast:     { value: 2.0 },
     uFlipX:        { value: 0 },        // 0 = normal, 1 = horizontal flip
@@ -45,7 +45,7 @@ export const VideoShader = {
     uniform float uVideoAspect, uOutAspect, uFit;
     uniform vec2  uPos;
     uniform float uScale, uRot, uOpacity, uDisplace, uTime;
-    uniform float uExposureStops, uSat, uContrast;
+    uniform float uExposure, uSat, uContrast;
     uniform float uFlipX, uFlipY;
     uniform vec2  uMouse;
     uniform float uMouseActive, uMouseStrength, uMouseRadius;
@@ -102,8 +102,8 @@ export const VideoShader = {
         rgb = texture(tVideo, vec2(sx, sy)).rgb;
       }
 
-      // Exposure (stops → linear multiplier)
-      rgb *= pow(2.0, uExposureStops);
+      // Exposure (linear multiplier)
+      rgb *= uExposure;
 
       // Saturation around luma
       float luma = dot(rgb, vec3(0.299, 0.587, 0.114));
